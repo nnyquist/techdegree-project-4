@@ -12,7 +12,7 @@ class Game {
   constructor() {
     this.missed = 0;
     this.phrases = this.createPhrases();
-    this.activePhrase = null;
+    this.activePhrase = this.getRandomPhrase();
   }
 
   /**
@@ -29,5 +29,13 @@ class Game {
     ];
 
     // not sure if I have the skills for this, but it would be pretty cool to add a lot of phrases and then have an array of 5 randomly selected.
+  }
+
+  /**
+   * Selects random phrase from phrases property
+   * @return {Object} Phrase object chosen to be used
+   */
+  getRandomPhrase() {
+    return new Phrase(this.phrases[Math.floor(Math.random() * 5)]);
   }
 }
