@@ -42,13 +42,58 @@ class Game {
   /**
    * Begins game by selecting a random phrase and displaying it to the user
    */
-  startGame(){
+  startGame() {
     // hide the start screen overlay
-    document.querySelector('#overlay').style.display = 'none';
+    document.querySelector("#overlay").style.display = "none";
 
     // call getRandomPhrase, display phrase, store in activePhrase
     const randPhrase = this.getRandomPhrase();
     randPhrase.addPhraseToDisplay();
     this.activePhrase = randPhrase;
+  }
+
+  /**
+   * Checks for winning move
+   * @return {Boolean} True if the game has been won, false otherwise
+   */
+  checkForWin() {
+    return document.querySelectorAll(".hide.letter").length > 0 ? false : true;
+  }
+
+  /**
+   * Increases the value of the missed property
+   * Removes a life from the scoreboard
+   * Checks if player has remaining lives and ends game if not
+   */
+  removeLife() {
+    if (this.missed < 4) {
+      this.missed += 1;
+
+      const hearts = document.querySelectorAll(
+        'li img[src="images/liveHeart.png"]'
+      );
+
+      hearts[0].setAttribute("src", "images/lostHeart.png");
+    } else {
+      this.gameOver(this.checkForWin());
+    }
+  }
+
+  /**
+   * Displays game over message
+   * @param {Boolean} gameWon - Whether or not the user won the game
+   */
+  gameOver(gameWon) {
+    const overlay = document.querySelector("#overlay");
+    overlay.style.display = "inherit";
+    if (gameWon) {
+      overlay.className = "win";
+      document.querySelector("#game-over-message").textContent =
+        "Great job you won!";
+    } else {
+      overlay.className = "lose";
+      document.querySelector("#game-over-message").textContent =
+        "Better luck next time!";
+    }
   }
 }
