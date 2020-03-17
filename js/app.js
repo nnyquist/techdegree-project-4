@@ -2,6 +2,12 @@
  * Project 4 - OOP Game App
  * app.js */
 
-// testing steps
-const game = new Game();
-game.activePhrase.addPhraseToDisplay();
+// variable declarations
+let game = '';
+const startButton = document.querySelector('#btn__reset');
+
+// event listener
+startButton.addEventListener('click', e => {
+  game = new Game();
+  game.startGame();
+})
