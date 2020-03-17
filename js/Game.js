@@ -95,5 +95,54 @@ class Game {
       document.querySelector("#game-over-message").textContent =
         "Better luck next time!";
     }
+
+    this.gameReset();
+  }
+
+  /**
+   * Handles onscreen keyboard button clicks
+   * @param {HTMLButtonElement} button - the clicked button element
+   */
+  handleInteraction(button) {
+    const letter = button.textContent;
+
+    // disable selected letter's button
+    button.disabled = true;
+
+    // is letter in phrase
+    if (this.activePhrase.checkLetter(letter)) {
+      this.activePhrase.showMatchedLetter(letter);
+      button.className = "chosen";
+      if (this.checkForWin()) {
+        this.gameOver(true);
+      }
+    } else {
+      button.className = "wrong";
+      this.removeLife();
+    }
+  }
+
+  /**
+   * Resets the game board
+   */
+  gameReset() {
+    this.missed = 0;
+    this.phrases = this.createPhrases();
+    this.activePhrase = null;
+
+    // remove all `li` elements from phrase `ul`
+    const div = document.querySelector("#phrase");
+    div.firstElementChild.textContent = ""; // credit for this solution goes to https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript I thought it was a really neat way to handle it
+
+    // enable all keys
+    const buttons = document.querySelectorAll("#qwerty button");
+    buttons.forEach(button => {
+      button.className = "key";
+      button.disabled = false;
+    });
+
+    // reset all hearts
+    const hearts = document.querySelectorAll("li img");
+    hearts.forEach(heart => heart.setAttribute("src", "images/liveHeart.png"));
   }
 }
