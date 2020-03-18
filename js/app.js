@@ -22,5 +22,10 @@ qwerty.addEventListener("click", e => {
 
 window.addEventListener("keydown", e => {
   const letter = e.key;
-  console.log(document.querySelector(`.${letter}`));
+  const buttons = document.querySelectorAll("button.key");
+  for (let i = 0; i < buttons.length; i++) {
+    if (buttons[i].textContent === letter) {
+      game.handleInteraction(buttons[i]);
+    }
+  }
 });
