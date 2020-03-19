@@ -27,8 +27,6 @@ class Game {
       "Poke Fun At",
       "Short End of the Stick"
     ];
-
-    // not sure if I have the skills for this, but it would be pretty cool to add a lot of phrases and then have an array of 5 randomly selected.
   }
 
   /**
@@ -36,7 +34,9 @@ class Game {
    * @return {Object} Phrase object chosen to be used
    */
   getRandomPhrase() {
-    return new Phrase(this.phrases[Math.floor(Math.random() * 5)]);
+    return new Phrase(
+      this.phrases[Math.floor(Math.random() * this.createPhrases().length)]
+    );
   }
 
   /**
